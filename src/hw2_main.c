@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
     int c = 0;
     int p = 0;
     int r = 0; 
+    int x = 0; 
     int option;
     while ((option = getopt(argc, argv, "i:o:c:p:r:")) != -1) {
         switch (option) {
@@ -45,12 +46,16 @@ int main(int argc, char **argv) {
                 break;
             case '?':
             default:
-                return UNRECOGNIZED_ARGUMENT;
+                x = 1;
         }
     }
     if (input_file == NULL || output_file == NULL) 
     {
         return MISSING_ARGUMENT;
+    }
+    if(x == 1)
+    {
+        return UNRECOGNIZED_ARGUMENT;
     }
     if(i >= 2 || o >= 2 || c >= 2 || p >= 2 || r >= 2)
     {
