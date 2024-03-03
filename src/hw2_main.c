@@ -32,12 +32,15 @@ int main(int argc, char **argv) {
                 o++;
                 break;
             case 'c':
+                
                 c++; 
                 break;
             case 'p':
+
                 p++;
                 break;
             case 'r':
+
                 r++; 
                 break;
             case '?':
@@ -54,14 +57,17 @@ int main(int argc, char **argv) {
         return DUPLICATE_ARGUMENT; 
     }
     FILE *fp;
-    if ((fp = fopen(output_file, "w")) == NULL)
-    {
-        return OUTPUT_FILE_UNWRITABLE; 
-    }
     if ((fp = fopen(input_file, "r")) == NULL)
     {
         return INPUT_FILE_MISSING; 
     }
-   
+    if ((fp = fopen(output_file, "w")) == NULL)
+    {
+        return OUTPUT_FILE_UNWRITABLE; 
+    }
+    if(p == 1 && c == 0)
+    {
+        return C_ARGUMENT_MISSING; 
+    }
     return 0;
 }
