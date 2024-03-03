@@ -49,6 +49,10 @@ int main(int argc, char **argv) {
     {
         return MISSING_ARGUMENT;
     }
+    if(i >= 2 || o >= 2 || c >= 2 || p >= 2 || r >= 2)
+    {
+        return DUPLICATE_ARGUMENT; 
+    }
     FILE *fp;
     if ((fp = fopen(output_file, "w")) == NULL)
     {
@@ -58,9 +62,6 @@ int main(int argc, char **argv) {
     {
         return INPUT_FILE_MISSING; 
     }
-    if(i >= 2 || o >= 2 || c >= 2 || p >= 2 || r >= 2)
-    {
-        return DUPLICATE_ARGUMENT; 
-    }
+   
     return 0;
 }
