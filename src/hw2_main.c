@@ -15,23 +15,30 @@ int main(int argc, char **argv) {
     (void)argv;
     const char *input_file = NULL;
     const char *output_file = NULL;
+    int i = 0; 
+    int o = 0;
+    int c = 0;
+    int p = 0;
+    int r = 0; 
     int option;
     while ((option = getopt(argc, argv, "i:o:c:p:r:")) != -1) {
         switch (option) {
             case 'i':
                 input_file = optarg;
+                i++;
                 break;
             case 'o':
                 output_file = optarg;
+                o++;
                 break;
             case 'c':
-
+                c++; 
                 break;
             case 'p':
-
+                p++;
                 break;
             case 'r':
-
+                r++; 
                 break;
             case '?':
             default:
@@ -41,6 +48,15 @@ int main(int argc, char **argv) {
     if (input_file == NULL || output_file == NULL) 
     {
         return MISSING_ARGUMENT;
+    }
+    FILE *fp;
+    if ((fp = fopen(output_file, "w")) == NULL)
+    {
+        return OUTPUT_FILE_UNWRITABLE; 
+    }
+    if(i > 1 || o > 1 || c > 1 || p > 1 || r > 1)
+    {
+        return DUPLICATE_ARGUMENT; 
     }
     return 0;
 }
