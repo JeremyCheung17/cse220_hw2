@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
                 x = 1;
         }
     }
-    if (input_file == NULL || output_file == NULL || input_file[0] == '\0' ||  output_file[0] == '\0') 
+    if (input_file == NULL || output_file == NULL || i == 0 ||  o == 0) 
     {
         return MISSING_ARGUMENT;
     }
