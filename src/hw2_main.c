@@ -25,23 +25,41 @@ int main(int argc, char **argv) {
     while ((option = getopt(argc, argv, "i:o:c:p:r:")) != -1) {
         switch (option) {
             case 'i':
+                if(optarg[0] == "-")
+                {
+                    return MISSING_ARGUMENT; 
+                }
                 input_file = optarg;
                 i++;
                 break;
             case 'o':
+                if(optarg[0] == "-")
+                {
+                    return MISSING_ARGUMENT; 
+                }
                 output_file = optarg;
                 o++;
+                printf("%s", optarg);
                 break;
             case 'c':
-                
+                if(optarg[0] == "-")
+                {
+                    return MISSING_ARGUMENT; 
+                }
                 c++; 
                 break;
             case 'p':
-
+                if(optarg[0] == "-")
+                {
+                    return MISSING_ARGUMENT; 
+                }
                 p++;
                 break;
             case 'r':
-
+                if(optarg[0] == "-")
+                {
+                    return MISSING_ARGUMENT; 
+                }
                 r++; 
                 break;
             case '?':
@@ -49,6 +67,7 @@ int main(int argc, char **argv) {
                 x = 1;
         }
     }
+    printf("%s", output_file);
     if (input_file == NULL || output_file == NULL) 
     {
         return MISSING_ARGUMENT;
