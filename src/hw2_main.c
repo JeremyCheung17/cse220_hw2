@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
     {
         return INPUT_FILE_MISSING; 
     }
-    if(i > 1 || o > 1 || c > 1 || p > 1 || r > 1)
+    if(i >= 2 || o >= 2 || c >= 2 || p >= 2 || r >= 2)
     {
         return DUPLICATE_ARGUMENT; 
     }
