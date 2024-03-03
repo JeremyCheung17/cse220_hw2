@@ -54,6 +54,10 @@ int main(int argc, char **argv) {
     {
         return OUTPUT_FILE_UNWRITABLE; 
     }
+    if ((fp = fopen(input_file, "r")) == NULL)
+    {
+        return INPUT_FILE_MISSING; 
+    }
     if(i > 1 || o > 1 || c > 1 || p > 1 || r > 1)
     {
         return DUPLICATE_ARGUMENT; 
