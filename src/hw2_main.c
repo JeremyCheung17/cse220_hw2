@@ -204,8 +204,6 @@ int main(int argc, char **argv) {
     char itype = input_file[ilength - 1];
     int olength = strlen(output_file);
     char otype = output_file[olength - 1];
-    printf("%d", otype);
-    
     if(itype == 'm')
     {
         if(otype == 'm')
@@ -223,13 +221,9 @@ int main(int argc, char **argv) {
             }
             else
             {
-    
                 FILE *f1, *f2;
                 char ch;
-                if((f1 = fopen(input_file, "r")) == NULL)
-                {
-                    printf("HELLO");
-                }
+                f1 = fopen(input_file, "r");
                 f2 = fopen(output_file, "w");
                 ch = fgetc(f1); 
                 while (ch != EOF) 
@@ -281,14 +275,14 @@ int main(int argc, char **argv) {
             {
                 FILE *f1, *f2;
                 char ch;
-                f1 = fopen(input_file, "r"); 
+                f1 = fopen(input_file, "r");
                 f2 = fopen(output_file, "w");
                 ch = fgetc(f1); 
                 while (ch != EOF) 
                 { 
                     fputc(ch, f2); 
                     ch = fgetc(f1); 
-                } 
+                }
                 fclose(f1); 
                 fclose(f2); 
             }
