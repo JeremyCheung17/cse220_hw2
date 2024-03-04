@@ -22,9 +22,9 @@ int main(int argc, char **argv) {
     int ccol = -1;
     int cwidth = -1;
     int cheight = -1; 
-    /*
     int prow = NULL;
     int pcol = NULL; 
+    /*
     const char *message = NULL;
     const char *font_path = NULL;
     int font_size = NULL;
@@ -37,6 +37,7 @@ int main(int argc, char **argv) {
     int r = 0; 
     int x = 0; 
     int y = 0; 
+    int g = 0; 
     int option;
     while ((option = getopt(argc, argv, ":i:o:c:p:r:")) != -1) {
         switch (option) {
@@ -92,7 +93,22 @@ int main(int argc, char **argv) {
                 break;
             case 'p':
                 b = optarg; 
-                //char *token = strtok(optarg, ",");
+                char *token = strtok(optarg, ",");
+                char * pEnd;
+                if(token != NULL)
+                {
+                    prow = strtol (token,&pEnd,10);
+                }
+                token = strtok (NULL, " ,.-");
+                if(token != NULL)
+                {
+                    pcol = strtol (token,&pEnd,10);
+                }
+                token = strtok (NULL, " ,.-");
+                if(token != NULL || prow == -1 || pcol == -1)
+                {
+                    g = 1; 
+                }
                 if(b[0] == '-')
                 {
                     return MISSING_ARGUMENT; 
@@ -143,6 +159,10 @@ int main(int argc, char **argv) {
     if(y == 1)
     {
         return C_ARGUMENT_INVALID; 
+    }
+    if(g == 0)
+    {
+        return P_ARGUMENT_INVALID; 
     }
     return 0;
 }
