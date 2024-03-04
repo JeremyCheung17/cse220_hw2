@@ -25,12 +25,13 @@ int main(int argc, char **argv) {
     int r = 0; 
     int x = 0; 
     int option;
-    while ((option = getopt(argc, argv, "i:o:c:p:r:")) != -1) {
+    while ((option = getopt(argc, argv, "i:o:c:p:r")) != -1) {
         switch (option) {
             case 'i':
                 input_file = optarg;
                 if(input_file[0] == '-' || input_file[0] == '\0' || input_file == NULL)
                 {
+                    
                     return MISSING_ARGUMENT; 
                 }
                 i++;
@@ -61,6 +62,7 @@ int main(int argc, char **argv) {
                 break;
             case 'r':
                 z = optarg; 
+                printf("%s", z);
                 if(z[0] == '-' || z[0] == '\0' || z == NULL)
                 {
                     return MISSING_ARGUMENT; 
@@ -72,7 +74,6 @@ int main(int argc, char **argv) {
                 x = 1;
         }
     }
-    printf("%s", output_file);
     if (input_file == NULL || output_file == NULL) 
     {
         return MISSING_ARGUMENT;
