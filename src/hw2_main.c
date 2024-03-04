@@ -93,19 +93,19 @@ int main(int argc, char **argv) {
                 break;
             case 'p':
                 b = optarg; 
-                char *token = strtok(optarg, ",");
-                char * pEnd;
-                if(token != NULL)
+                char *token2 = strtok(optarg, ",");
+                char * pEnd2;
+                if(token2 != NULL)
                 {
-                    prow = strtol (token,&pEnd,10);
+                    prow = strtol (token2,&pEnd2,10);
                 }
-                token = strtok (NULL, " ,.-");
-                if(token != NULL)
+                token2 = strtok (NULL, " ,.-");
+                if(token2 != NULL)
                 {
-                    pcol = strtol (token,&pEnd,10);
+                    pcol = strtol (token2,&pEnd2,10);
                 }
-                token = strtok (NULL, " ,.-");
-                if(token != NULL || prow == -1 || pcol == -1)
+                token2 = strtok (NULL, " ,.-");
+                if(token2 != NULL || prow == -1 || pcol == -1)
                 {
                     g = 1; 
                 }
