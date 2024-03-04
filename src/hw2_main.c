@@ -60,13 +60,25 @@ int main(int argc, char **argv) {
                 a = optarg; 
                 char *token = strtok(optarg, ",");
                 char * pEnd;
-                crow = strtol (token,&pEnd,10);
+                if(token != NULL)
+                {
+                    crow = strtol (token,&pEnd,10);
+                }
                 token = strtok (NULL, " ,.-");
-                ccol = strtol (token,&pEnd,10);
+                if(token != NULL)
+                {
+                    ccol = strtol (token,&pEnd,10);
+                }
                 token = strtok (NULL, " ,.-");
-                cwidth = strtol (token,&pEnd,10);
+                if(token != NULL)
+                {
+                    cwidth = strtol (token,&pEnd,10);
+                }
                 token = strtok (NULL, " ,.-");
-                cheight = strtol (token,&pEnd,10);
+                if(token != NULL)
+                {
+                    cheight = strtol (token,&pEnd,10);
+                }
                 token = strtok (NULL, " ,.-");
                 if(token != NULL || crow == -1 || ccol == -1 || cwidth == -1 || cheight == -1)
                 {
