@@ -117,34 +117,34 @@ int main(int argc, char **argv) {
                 break;
             case 'r':
                 z = optarg; 
-                char *token = strtok(optarg, ",");
-                char * pEnd;
-                if(token != NULL)
+                char *token3 = strtok(optarg, ",");
+                char * pEnd3;
+                if(token3 != NULL)
                 {
-                    message = token;
+                    message = token3;
+                }
+                token3 = strtok (NULL, " ,.-");
+                if(token3 != NULL)
+                {
+                    font_path = token3;
                 }
                 token = strtok (NULL, " ,.-");
-                if(token != NULL)
+                if(token3 != NULL)
                 {
-                    font_path = token;
+                    font_size = strtol (token3,&pEnd3,10);
                 }
-                token = strtok (NULL, " ,.-");
-                if(token != NULL)
+                token3 = strtok (NULL, " ,.-");
+                if(token3 != NULL)
                 {
-                    font_size = strtol (token,&pEnd,10);
+                    rrow = strtol (token3,&pEnd3,10);
                 }
-                token = strtok (NULL, " ,.-");
-                if(token != NULL)
+                token3 = strtok (NULL, " ,.-");
+                if(token3 != NULL)
                 {
-                    rrow = strtol (token,&pEnd,10);
+                    rcol = strtol (token3,&pEnd3,10);
                 }
-                token = strtok (NULL, " ,.-");
-                if(token != NULL)
-                {
-                    rcol = strtol (token,&pEnd,10);
-                }
-                token = strtok (NULL, " ,.-");
-                if(token != NULL || message == NULL || font_path == -1 || font_size == -1 || rrow == -1 || rcol == -1)
+                token3 = strtok (NULL, " ,.-");
+                if(token3 != NULL || message == NULL || font_path == -1 || font_size == -1 || rrow == -1 || rcol == -1)
                 {
                     k = 1; 
                 }
