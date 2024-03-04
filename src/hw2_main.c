@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
         switch (option) {
             case 'i':
                 input_file = optarg;
-                if(input_file[0] == "-")
+                if(input_file[0] == '-')
                 {
                     return MISSING_ARGUMENT; 
                 }
@@ -37,16 +37,15 @@ int main(int argc, char **argv) {
                 break;
             case 'o':
                 output_file = optarg;
-                if(output_file[0] == "-")
+                if(output_file[0] == '-')
                 {
                     return MISSING_ARGUMENT; 
                 }
                 o++;
-                printf("%s", optarg);
                 break;
             case 'c':
                 a = optarg; 
-                if(a[0] == "-")
+                if(a[0] == '-')
                 {
                     return MISSING_ARGUMENT; 
                 }
@@ -54,7 +53,7 @@ int main(int argc, char **argv) {
                 break;
             case 'p':
                 b = optarg; 
-                if(b[0] == "-")
+                if(b[0] == '-')
                 {
                     return MISSING_ARGUMENT; 
                 }
@@ -62,7 +61,7 @@ int main(int argc, char **argv) {
                 break;
             case 'r':
                 z = optarg; 
-                if(z[0] == "-")
+                if(z[0] == '-')
                 {
                     return MISSING_ARGUMENT; 
                 }
