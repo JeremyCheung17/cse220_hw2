@@ -261,7 +261,7 @@ int main(int argc, char **argv) {
     }
     else if(strcmp(itype,"sbu") == 0)
     {
-        if(otype,"sbu")
+        if(strcmp(otype,"sbu") == 0)
         {
             if(prow != -1)
             {
@@ -291,7 +291,7 @@ int main(int argc, char **argv) {
                 fclose(f2); 
             }
         }
-        else if(otype,"ppm")
+        else if(strcmp(otype,"ppm") == 0)
         {
             if(prow != -1)
             {
