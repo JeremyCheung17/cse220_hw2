@@ -206,9 +206,9 @@ int main(int argc, char **argv) {
     char otype = output_file[olength - 1];
     printf("%d", otype);
     
-    if(strcmp(itype,"ppm") == 0)
+    if(itype == 'm')
     {
-        if(strcmp(otype,"ppm") == 0)
+        if(otype == 'm')
         {
             if(prow != -1)
             {
@@ -241,7 +241,7 @@ int main(int argc, char **argv) {
                 fclose(f2); 
             }
         }
-        else if(strcmp(otype,"sbu") == 0)
+        else if(otype == 'u')
         {
             if(prow != -1)
             {
@@ -261,9 +261,9 @@ int main(int argc, char **argv) {
             }
         }
     }
-    else if(strcmp(itype,"sbu") == 0)
+    else if(itype == 'u')
     {
-        if(strcmp(otype,"sbu") == 0)
+        if(otype == 'u')
         {
             if(prow != -1)
             {
@@ -293,7 +293,7 @@ int main(int argc, char **argv) {
                 fclose(f2); 
             }
         }
-        else if(strcmp(otype,"ppm") == 0)
+        else if(otype == 'p')
         {
             if(prow != -1)
             {
