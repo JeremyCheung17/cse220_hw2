@@ -15,6 +15,9 @@ int main(int argc, char **argv) {
     (void)argv;
     const char *input_file = NULL;
     const char *output_file = NULL;
+    const char *a = NULL;
+    const char *b = NULL;
+    const char *z = NULL;
     int i = 0; 
     int o = 0;
     int c = 0;
@@ -25,38 +28,41 @@ int main(int argc, char **argv) {
     while ((option = getopt(argc, argv, "i:o:c:p:r:")) != -1) {
         switch (option) {
             case 'i':
-                if(optarg[0] == "-")
+                input_file = optarg;
+                if(input_file[0] == "-")
                 {
                     return MISSING_ARGUMENT; 
                 }
-                input_file = optarg;
                 i++;
                 break;
             case 'o':
-                if(optarg[0] == "-")
+                output_file = optarg;
+                if(output_file[0] == "-")
                 {
                     return MISSING_ARGUMENT; 
                 }
-                output_file = optarg;
                 o++;
                 printf("%s", optarg);
                 break;
             case 'c':
-                if(optarg[0] == "-")
+                a = optarg; 
+                if(a[0] == "-")
                 {
                     return MISSING_ARGUMENT; 
                 }
                 c++; 
                 break;
             case 'p':
-                if(optarg[0] == "-")
+                b = optarg; 
+                if(b[0] == "-")
                 {
                     return MISSING_ARGUMENT; 
                 }
                 p++;
                 break;
             case 'r':
-                if(optarg[0] == "-")
+                z = optarg; 
+                if(z[0] == "-")
                 {
                     return MISSING_ARGUMENT; 
                 }
