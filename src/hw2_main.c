@@ -199,16 +199,14 @@ int main(int argc, char **argv) {
     {
         return R_ARGUMENT_INVALID; 
     }
-    char itype[3];
+    
+    char itype[3] = "";
     int length = strlen(input_file);
     itype[0] = input_file[length - 3];
     itype[1] = input_file[length - 2];
     itype[2] = input_file[length - 1];
-    char otype[3];
-    length = strlen(output_file);
-    otype[0] = output_file[length - 3];
-    otype[1] = output_file[length - 2];
-    otype[2] = output_file[length - 1];
+    char otype[] = "ppm";
+    
     if(strcmp(itype,"ppm") == 0)
     {
         if(strcmp(otype,"ppm") == 0)
@@ -226,6 +224,7 @@ int main(int argc, char **argv) {
             }
             else
             {
+    
                 FILE *f1, *f2;
                 char ch;
                 if((f1 = fopen(input_file, "r")) == NULL)
