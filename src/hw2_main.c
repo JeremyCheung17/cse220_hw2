@@ -199,7 +199,7 @@ int main(int argc, char **argv) {
     {
         return R_ARGUMENT_INVALID; 
     }
-    /*char * itype;
+    char * itype;
     itype = strtok(input_file,".");
     itype = strtok (NULL, " ,.-");
     char * otype;
@@ -210,7 +210,6 @@ int main(int argc, char **argv) {
     {
         if(strcmp(otype,"ppm") == 0)
         {
-            printf("%d", rrow); 
             if(prow != -1)
             {
                 if(rrow != -1)
@@ -220,10 +219,11 @@ int main(int argc, char **argv) {
             }
             else if(rrow != -1)
             {
-                printf("%d", rrow); 
+                 
             }
             else
             {
+                printf("HELLO");
                 FILE *f1, *f2;
                 char ch;
                 f1 = fopen(input_file, "r"); 
@@ -309,6 +309,6 @@ int main(int argc, char **argv) {
                 
             }
         }
-    }*/
+    }
     return 0;
 }
