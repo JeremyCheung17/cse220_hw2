@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
     FILE *fp;
-    const char *input_file = NULL;
+    char *input_file = NULL;
     const char *output_file = NULL;
     const char *a = NULL;
     const char *b = NULL;
@@ -175,7 +175,6 @@ int main(int argc, char **argv) {
     {
         return DUPLICATE_ARGUMENT; 
     }
-    
     if ((fp = fopen(input_file, "r")) == NULL)
     {
         return INPUT_FILE_MISSING; 
@@ -184,26 +183,133 @@ int main(int argc, char **argv) {
     {
         return OUTPUT_FILE_UNWRITABLE; 
     }
-    
     if(p == 1 && c == 0)
     {
         return C_ARGUMENT_MISSING; 
     }
-    
     if(y == 1)
     {
         return C_ARGUMENT_INVALID; 
     }
-    
     if(g == 1)
     {
         return P_ARGUMENT_INVALID; 
     }
-    
     if(k == 1)
     {
         return R_ARGUMENT_INVALID; 
     }
-    
+    char * itype;
+    itype = strtok(input_file,".");
+    itype = strtok (NULL, " ,.-");
+    printf("%s", itype); 
+    char * otype;
+    otype = strtok(output_file,".");
+    otype = strtok (NULL, " ,.-");
+    printf("%s", otype); 
+    if(strcmp(itype,"ppm") == 0)
+    {
+        if(strcmp(otype,"ppm") == 0)
+        {
+            if(prow != -1)
+            {
+
+                if(rrow != 1)
+                {
+
+                }
+            }
+            else if(rrow != 1)
+            {
+
+            }
+            else
+            {
+                FILE *f1, *f2;
+                char c;
+                f1 = fopen(input_file, "r"); 
+                f2 = fopen(output_file, "w");
+                c = fgetc(f1); 
+                while (c != EOF) 
+                { 
+                    fputc(c, f2); 
+                    c = fgetc(f1); 
+                } 
+                fclose(f1); 
+                fclose(f2); 
+            }
+        }
+        else if(strcmp(otype,"sbu") == 0)
+        {
+            if(prow != -1)
+            {
+
+                if(rrow != 1)
+                {
+
+                }
+            }
+            else if(rrow != 1)
+            {
+
+            }
+            else
+            {
+                
+            }
+        }
+    }
+    else if(strcmp(itype,"sbu") == 0)
+    {
+        if(otype,"sbu")
+        {
+            if(prow != -1)
+            {
+
+                if(rrow != 1)
+                {
+
+                }
+            }
+            else if(rrow != 1)
+            {
+
+            }
+            else
+            {
+                FILE *f1, *f2;
+                char c;
+                f1 = fopen(input_file, "r"); 
+                f2 = fopen(output_file, "w");
+                c = fgetc(f1); 
+                while (c != EOF) 
+                { 
+                    fputc(c, f2); 
+                    c = fgetc(f1); 
+                } 
+                fclose(f1); 
+                fclose(f2); 
+            }
+        }
+        else if(otype,"ppm")
+        {
+            if(prow != -1)
+            {
+
+                if(rrow != 1)
+                {
+
+                }
+            }
+            else if(rrow != 1)
+            {
+
+            }
+            else
+            {
+                
+            }
+        }
+    }
     return 0;
 }

@@ -1,3 +1,8 @@
 {
+    "files.associations": {
+        "getopt_core.h": "c",
+        "variant": "c",
+        "sstream": "c"
+    }
     //"C_Cpp.intelliSenseEngine": "disabled"
 }
