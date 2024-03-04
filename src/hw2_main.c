@@ -199,13 +199,16 @@ int main(int argc, char **argv) {
     {
         return R_ARGUMENT_INVALID; 
     }
-    char * itype;
-    itype = strtok(input_file,".");
-    itype = strtok (NULL, " ,.-");
-    char * otype;
-    otype = strtok(output_file,".");
-    otype = strtok (NULL, " ,.-");
-    
+    char itype[3];
+    int length = strlen(input_file);
+    itype[0] = input_file[length - 3];
+    itype[1] = input_file[length - 2];
+    itype[2] = input_file[length - 1];
+    char otype[3];
+    length = strlen(output_file);
+    otype[0] = output_file[length - 3];
+    otype[1] = output_file[length - 2];
+    otype[2] = output_file[length - 1];
     if(strcmp(itype,"ppm") == 0)
     {
         if(strcmp(otype,"ppm") == 0)
@@ -223,17 +226,19 @@ int main(int argc, char **argv) {
             }
             else
             {
-                printf("HELLO");
                 FILE *f1, *f2;
                 char ch;
-                f1 = fopen(input_file, "r"); 
+                if((f1 = fopen(input_file, "r")) == NULL)
+                {
+                    printf("HELLO");
+                }
                 f2 = fopen(output_file, "w");
                 ch = fgetc(f1); 
                 while (ch != EOF) 
                 { 
                     fputc(ch, f2); 
                     ch = fgetc(f1); 
-                } 
+                }
                 fclose(f1); 
                 fclose(f2); 
             }
