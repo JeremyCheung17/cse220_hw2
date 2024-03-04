@@ -24,12 +24,11 @@ int main(int argc, char **argv) {
     int cheight = -1; 
     int prow = -1;
     int pcol = -1; 
-    /*
     const char *message = NULL;
     const char *font_path = NULL;
-    int font_size = NULL;
-    int rrow = NULL;
-    int rcol = NULL; */
+    int font_size = -1;
+    int rrow = -1;
+    int rcol = -1; 
     int i = 0; 
     int o = 0;
     int c = 0;
@@ -38,6 +37,7 @@ int main(int argc, char **argv) {
     int x = 0; 
     int y = 0; 
     int g = 0; 
+    int k = 0; 
     int option;
     while ((option = getopt(argc, argv, ":i:o:c:p:r:")) != -1) {
         switch (option) {
@@ -117,7 +117,37 @@ int main(int argc, char **argv) {
                 break;
             case 'r':
                 z = optarg; 
-                //char *token = strtok(optarg, ",");
+                char *token = strtok(optarg, ",");
+                char * pEnd;
+                if(token != NULL)
+                {
+                    message = token;
+                }
+                token = strtok (NULL, " ,.-");
+                if(token != NULL)
+                {
+                    font_path = token;
+                }
+                token = strtok (NULL, " ,.-");
+                if(token != NULL)
+                {
+                    font_size = strtol (token,&pEnd,10);
+                }
+                token = strtok (NULL, " ,.-");
+                if(token != NULL)
+                {
+                    rrow = strtol (token,&pEnd,10);
+                }
+                token = strtok (NULL, " ,.-");
+                if(token != NULL)
+                {
+                    rcol = strtol (token,&pEnd,10);
+                }
+                token = strtok (NULL, " ,.-");
+                if(token != NULL || message == NULL || font_path == -1 || font_size == -1 || rrow == -1 || rcol == -1)
+                {
+                    k = 1; 
+                }
                 if(z[0] == '-')
                 {
                     return MISSING_ARGUMENT; 
@@ -163,6 +193,10 @@ int main(int argc, char **argv) {
     if(g == 1)
     {
         return P_ARGUMENT_INVALID; 
+    }
+    if(k == 1)
+    {
+        return R_ARGUMENT_INVALID; 
     }
     return 0;
 }
