@@ -199,7 +199,7 @@ int main(int argc, char **argv) {
     {
         return R_ARGUMENT_INVALID; 
     }
-    char * itype;
+    /*char * itype;
     itype = strtok(input_file,".");
     itype = strtok (NULL, " ,.-");
     char * otype;
@@ -309,6 +309,6 @@ int main(int argc, char **argv) {
                 
             }
         }
-    }
+    }*/
     return 0;
 }
