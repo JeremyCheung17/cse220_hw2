@@ -22,8 +22,8 @@ int main(int argc, char **argv) {
     int ccol = -1;
     int cwidth = -1;
     int cheight = -1; 
-    int prow = NULL;
-    int pcol = NULL; 
+    int prow = -1;
+    int pcol = -1; 
     /*
     const char *message = NULL;
     const char *font_path = NULL;
