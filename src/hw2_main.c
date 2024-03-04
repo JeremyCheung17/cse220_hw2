@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
                     rcol = strtol (token3,&pEnd3,10);
                 }
                 token3 = strtok (NULL, " ,.-");
-                if(token3 != NULL || message == NULL || font_path == -1 || font_size == -1 || rrow == -1 || rcol == -1)
+                if(token3 != NULL || message == NULL || font_path == NULL || font_size == -1 || rrow == -1 || rcol == -1)
                 {
                     k = 1; 
                 }
