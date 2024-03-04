@@ -66,22 +66,22 @@ int main(int argc, char **argv) {
                 {
                     crow = strtol (token,&pEnd,10);
                 }
-                token = strtok (NULL, " ,.-");
+                token = strtok (NULL, " ,");
                 if(token != NULL)
                 {
                     ccol = strtol (token,&pEnd,10);
                 }
-                token = strtok (NULL, " ,.-");
+                token = strtok (NULL, " ,");
                 if(token != NULL)
                 {
                     cwidth = strtol (token,&pEnd,10);
                 }
-                token = strtok (NULL, " ,.-");
+                token = strtok (NULL, " ,");
                 if(token != NULL)
                 {
                     cheight = strtol (token,&pEnd,10);
                 }
-                token = strtok (NULL, " ,.-");
+                token = strtok (NULL, " ,");
                 if(token != NULL || crow == -1 || ccol == -1 || cwidth == -1 || cheight == -1)
                 {
                     y = 1; 
@@ -100,12 +100,12 @@ int main(int argc, char **argv) {
                 {
                     prow = strtol (token2,&pEnd2,10);
                 }
-                token2 = strtok (NULL, " ,.-");
+                token2 = strtok (NULL, " ,");
                 if(token2 != NULL)
                 {
                     pcol = strtol (token2,&pEnd2,10);
                 }
-                token2 = strtok (NULL, " ,.-");
+                token2 = strtok (NULL, " ,");
                 if(token2 != NULL || prow == -1 || pcol == -1)
                 {
                     g = 1; 
@@ -124,27 +124,27 @@ int main(int argc, char **argv) {
                 {
                     message = token3;
                 }
-                token3 = strtok (NULL, " ,.-");
+                token3 = strtok (NULL, " ,");
                 if(token3 != NULL)
                 {
                     font_path = token3;
                 }
-                token = strtok (NULL, " ,.-");
+                token3 = strtok (NULL, " ,");
                 if(token3 != NULL)
                 {
                     font_size = strtol (token3,&pEnd3,10);
                 }
-                token3 = strtok (NULL, " ,.-");
+                token3 = strtok (NULL, " ,");
                 if(token3 != NULL)
                 {
                     rrow = strtol (token3,&pEnd3,10);
                 }
-                token3 = strtok (NULL, " ,.-");
+                token3 = strtok (NULL, " ,");
                 if(token3 != NULL)
                 {
                     rcol = strtol (token3,&pEnd3,10);
                 }
-                token3 = strtok (NULL, " ,.-");
+                token3 = strtok (NULL, " ,");
                 if(token3 != NULL || message == NULL || font_path == NULL || font_size == -1 || rrow == -1 || rcol == -1 || (fp = fopen(font_path, "r")) == NULL)
                 {
                     k = 1; 
@@ -162,6 +162,7 @@ int main(int argc, char **argv) {
                 x = 1;
         }
     }
+    
     if (input_file == NULL || output_file == NULL) 
     {
         return MISSING_ARGUMENT;
@@ -174,6 +175,7 @@ int main(int argc, char **argv) {
     {
         return DUPLICATE_ARGUMENT; 
     }
+    
     if ((fp = fopen(input_file, "r")) == NULL)
     {
         return INPUT_FILE_MISSING; 
@@ -182,21 +184,26 @@ int main(int argc, char **argv) {
     {
         return OUTPUT_FILE_UNWRITABLE; 
     }
+    
     if(p == 1 && c == 0)
     {
         return C_ARGUMENT_MISSING; 
     }
+    
     if(y == 1)
     {
         return C_ARGUMENT_INVALID; 
     }
+    
     if(g == 1)
     {
         return P_ARGUMENT_INVALID; 
     }
+    
     if(k == 1)
     {
         return R_ARGUMENT_INVALID; 
     }
+    
     return 0;
 }
