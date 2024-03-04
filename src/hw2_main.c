@@ -160,7 +160,7 @@ int main(int argc, char **argv) {
     {
         return C_ARGUMENT_INVALID; 
     }
-    if(g == 0)
+    if(g == 1)
     {
         return P_ARGUMENT_INVALID; 
     }
