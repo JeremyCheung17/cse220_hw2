@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     (void)argv;
     FILE *fp;
     char *input_file = NULL;
-    const char *output_file = NULL;
+    char *output_file = NULL;
     const char *a = NULL;
     const char *b = NULL;
     const char *z = NULL;
@@ -226,14 +226,14 @@ int main(int argc, char **argv) {
             else
             {
                 FILE *f1, *f2;
-                char c;
+                char ch;
                 f1 = fopen(input_file, "r"); 
                 f2 = fopen(output_file, "w");
-                c = fgetc(f1); 
-                while (c != EOF) 
+                ch = fgetc(f1); 
+                while (ch != EOF) 
                 { 
-                    fputc(c, f2); 
-                    c = fgetc(f1); 
+                    fputc(ch, f2); 
+                    ch = fgetc(f1); 
                 } 
                 fclose(f1); 
                 fclose(f2); 
@@ -278,14 +278,14 @@ int main(int argc, char **argv) {
             else
             {
                 FILE *f1, *f2;
-                char c;
+                char ch;
                 f1 = fopen(input_file, "r"); 
                 f2 = fopen(output_file, "w");
-                c = fgetc(f1); 
-                while (c != EOF) 
+                ch = fgetc(f1); 
+                while (ch != EOF) 
                 { 
-                    fputc(c, f2); 
-                    c = fgetc(f1); 
+                    fputc(ch, f2); 
+                    ch = fgetc(f1); 
                 } 
                 fclose(f1); 
                 fclose(f2); 
