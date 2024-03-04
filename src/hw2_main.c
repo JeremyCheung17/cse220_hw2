@@ -25,13 +25,12 @@ int main(int argc, char **argv) {
     int r = 0; 
     int x = 0; 
     int option;
-    while ((option = getopt(argc, argv, "i:o:c:p:r:")) != -1) {
+    while ((option = getopt(argc, argv, "iocpr")) != -1) {
         switch (option) {
             case 'i':
                 input_file = optarg;
                 if(input_file[0] == '-')
                 {
-                    
                     return MISSING_ARGUMENT; 
                 }
                 i++;
