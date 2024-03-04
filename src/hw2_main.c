@@ -202,26 +202,25 @@ int main(int argc, char **argv) {
     char * itype;
     itype = strtok(input_file,".");
     itype = strtok (NULL, " ,.-");
-    printf("%s", itype); 
     char * otype;
     otype = strtok(output_file,".");
     otype = strtok (NULL, " ,.-");
-    printf("%s", otype); 
+    
     if(strcmp(itype,"ppm") == 0)
     {
         if(strcmp(otype,"ppm") == 0)
         {
+            printf("%d", rrow); 
             if(prow != -1)
             {
-
-                if(rrow != 1)
+                if(rrow != -1)
                 {
 
                 }
             }
-            else if(rrow != 1)
+            else if(rrow != -1)
             {
-
+                printf("%d", rrow); 
             }
             else
             {
@@ -244,12 +243,12 @@ int main(int argc, char **argv) {
             if(prow != -1)
             {
 
-                if(rrow != 1)
+                if(rrow != -1)
                 {
 
                 }
             }
-            else if(rrow != 1)
+            else if(rrow != -1)
             {
 
             }
@@ -266,12 +265,12 @@ int main(int argc, char **argv) {
             if(prow != -1)
             {
 
-                if(rrow != 1)
+                if(rrow != -1)
                 {
 
                 }
             }
-            else if(rrow != 1)
+            else if(rrow != -1)
             {
 
             }
@@ -296,12 +295,12 @@ int main(int argc, char **argv) {
             if(prow != -1)
             {
 
-                if(rrow != 1)
+                if(rrow != -1)
                 {
 
                 }
             }
-            else if(rrow != 1)
+            else if(rrow != -1)
             {
 
             }
