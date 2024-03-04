@@ -25,10 +25,11 @@ int main(int argc, char **argv) {
     int r = 0; 
     int x = 0; 
     int option;
-    while ((option = getopt(argc, argv, "iocpr")) != -1) {
+    while ((option = getopt(argc, argv, ":i:o:c:p:r:")) != -1) {
         switch (option) {
             case 'i':
                 input_file = optarg;
+                printf("%s", input_file); 
                 if(input_file[0] == '-')
                 {
                     return MISSING_ARGUMENT; 
@@ -67,6 +68,8 @@ int main(int argc, char **argv) {
                 }
                 r++; 
                 break;
+            case ':':
+                return MISSING_ARGUMENT; 
             case '?':
             default:
                 x = 1;
