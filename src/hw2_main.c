@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
                 token = strtok (NULL, " ,.-");
                 cheight = strtol (token,&pEnd,10);
                 token = strtok (NULL, " ,.-");
-                if(token != NULL)
+                if(token != NULL || crow == -1 || ccol == -1 || cwidth == -1 || cheight == -1)
                 {
                     y = 1; 
                 }
@@ -128,7 +128,7 @@ int main(int argc, char **argv) {
     {
         return C_ARGUMENT_MISSING; 
     }
-    if(y == 1 || crow == -1 || ccol == -1 || cwidth == -1 || cheight == -1)
+    if(y == 1)
     {
         return C_ARGUMENT_INVALID; 
     }
