@@ -1,5 +1,4 @@
 #include "hw2.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -9,7 +8,9 @@
 #include <string.h>
 #include <unistd.h> 
 #include <getopt.h>
-
+typedef struct {
+    unsigned char r, g, b;
+} Pixel;
 int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
@@ -30,7 +31,7 @@ int main(int argc, char **argv) {
     int font_size = -1;
     int rrow = -1;
     int rcol = -1; 
-    int i = 0; 
+    int in = 0; 
     int o = 0;
     int c = 0;
     int p = 0;
@@ -38,7 +39,7 @@ int main(int argc, char **argv) {
     int x = 0; 
     int y = 0; 
     int g = 0; 
-    int k = 0; 
+    int v = 0; 
     int option;
     while ((option = getopt(argc, argv, ":i:o:c:p:r:")) != -1) {
         switch (option) {
@@ -48,7 +49,7 @@ int main(int argc, char **argv) {
                 {
                     return MISSING_ARGUMENT; 
                 }
-                i++;
+                in++;
                 break;
             case 'o':
                 output_file = optarg;
@@ -147,7 +148,7 @@ int main(int argc, char **argv) {
                 token3 = strtok (NULL, " ,");
                 if(token3 != NULL || message == NULL || font_path == NULL || font_size == -1 || rrow == -1 || rcol == -1 || (fp = fopen(font_path, "r")) == NULL)
                 {
-                    k = 1; 
+                    v = 1; 
                 }
                 if(z[0] == '-')
                 {
@@ -171,7 +172,7 @@ int main(int argc, char **argv) {
     {
         return UNRECOGNIZED_ARGUMENT;
     }
-    if(i >= 2 || o >= 2 || c >= 2 || p >= 2 || r >= 2)
+    if(in >= 2 || o >= 2 || c >= 2 || p >= 2 || r >= 2)
     {
         return DUPLICATE_ARGUMENT; 
     }
@@ -195,7 +196,7 @@ int main(int argc, char **argv) {
     {
         return P_ARGUMENT_INVALID; 
     }
-    if(k == 1)
+    if(v == 1)
     {
         return R_ARGUMENT_INVALID; 
     }
@@ -210,14 +211,27 @@ int main(int argc, char **argv) {
         {
             if(prow != -1)
             {
+                FILE *f1, *f2;
+                //char ch;
+                f1 = fopen(input_file, "r");
+                f2 = fopen(output_file, "w");
+                
                 if(rrow != -1)
                 {
 
                 }
+                fclose(f1); 
+                fclose(f2); 
             }
             else if(rrow != -1)
             {
-                 
+                FILE *f1, *f2;
+                //char ch;
+                f1 = fopen(input_file, "r");
+                f2 = fopen(output_file, "w");
+
+                fclose(f1); 
+                fclose(f2); 
             }
             else
             {
@@ -239,19 +253,109 @@ int main(int argc, char **argv) {
         {
             if(prow != -1)
             {
-
+                FILE *f1, *f2;
+                //char ch;
+                f1 = fopen(input_file, "r");
+                f2 = fopen(output_file, "w");
                 if(rrow != -1)
                 {
 
                 }
+                fclose(f1); 
+                fclose(f2); 
             }
             else if(rrow != -1)
             {
+                FILE *f1, *f2;
+                //char ch;
+                f1 = fopen(input_file, "r");
+                f2 = fopen(output_file, "w");
 
+                fclose(f1); 
+                fclose(f2); 
             }
             else
             {
-                
+                FILE *f1, *f2;
+                f1 = fopen(input_file, "r");
+                f2 = fopen(output_file, "w");
+                char format[2];
+                int width, height, max_color;
+                Pixel image[1000][1000];
+                Pixel color_table[255];
+                int color_index[1000][1000];
+                fscanf(f1, "%2s", format); // Read magic number
+                fscanf(f1, "%d %d", &width, &height); // Read width and height
+                fscanf(f1, "%d", &max_color);
+                for (int i = 0; i < height; i++) 
+                {
+                    for (int j = 0; j < width; j++) 
+                    {
+                        fscanf(f1, "%hhu %hhu %hhu", &image[i][j].r, &image[i][j].g, &image[i][j].b);
+                    }
+                }
+                int num_colors = 0;
+                for (int i = 0; i < height; i++) 
+                {
+                     for (int j = 0; j < width; j++) 
+                     {
+                        int found = 0;
+                        for (int k = 0; k < num_colors; k++) 
+                        {
+                            if (image[i][j].r == color_table[k].r && image[i][j].g == color_table[k].g && image[i][j].b == color_table[k].b) 
+                            {
+                                color_index[i][j] = k;
+                                found = 1;
+                                break;
+                            }
+                        }
+                        if (!found) 
+                        {
+                            color_table[num_colors] = image[i][j];
+                            color_index[i][j] = num_colors;
+                            num_colors++;
+                        }
+                    }
+                }
+                fprintf(f2, "SBU\n%d %d\n%d ", width, height, num_colors);
+                for (int i = 0; i < num_colors; i++) 
+                {
+                    fprintf(f2, "%hhu %hhu %hhu ", color_table[i].r, color_table[i].g, color_table[i].b);
+                }
+                fprintf(f2, "\n");
+                for (int i = 0; i < height; i++) 
+                {
+                    int count = 1;
+                    for (int j = 1; j < width; j++) 
+                    {
+                        if (color_index[i][j] == color_index[i][j-1]) 
+                        {
+                            count++;
+                        } 
+                        else 
+                        {
+                            if (count > 1) 
+                            {
+                                fprintf(f2, "*%d %d ", count, color_index[i][j-1]);
+                            } 
+                            else 
+                            {
+                                fprintf(f2, "%d ", color_index[i][j-1]);
+                            }
+                            count = 1;
+                        }
+                    }
+                    if (count > 1) 
+                    {
+                        fprintf(f2, "*%d %d ", count, color_index[i][width-1]);
+                    } 
+                    else 
+                    {
+                        fprintf(f2, "%d ", color_index[i][width-1]);
+                    }
+                }
+                fclose(f1); 
+                fclose(f2); 
             }
         }
     }
@@ -261,15 +365,26 @@ int main(int argc, char **argv) {
         {
             if(prow != -1)
             {
-
+                FILE *f1, *f2;
+                //char ch;
+                f1 = fopen(input_file, "r");
+                f2 = fopen(output_file, "w");
                 if(rrow != -1)
                 {
 
                 }
+                fclose(f1); 
+                fclose(f2); 
             }
             else if(rrow != -1)
             {
+                FILE *f1, *f2;
+                //char ch;
+                f1 = fopen(input_file, "r");
+                f2 = fopen(output_file, "w");
 
+                fclose(f1); 
+                fclose(f2); 
             }
             else
             {
@@ -291,19 +406,37 @@ int main(int argc, char **argv) {
         {
             if(prow != -1)
             {
+                FILE *f1, *f2;
+                //char ch;
+                f1 = fopen(input_file, "r");
+                f2 = fopen(output_file, "w");
 
                 if(rrow != -1)
                 {
 
                 }
+                fclose(f1); 
+                fclose(f2); 
             }
             else if(rrow != -1)
             {
+                FILE *f1, *f2;
+                //char ch;
+                f1 = fopen(input_file, "r");
+                f2 = fopen(output_file, "w");
 
+                fclose(f1); 
+                fclose(f2); 
             }
             else
             {
-                
+                FILE *f1, *f2;
+                //char ch;
+                f1 = fopen(input_file, "r");
+                f2 = fopen(output_file, "w");
+
+                fclose(f1); 
+                fclose(f2); 
             }
         }
     }
