@@ -225,6 +225,7 @@ int main(int argc, char **argv) {
                 fscanf(f1, "%d", &max_color);
                 Pixel image[height][width];
                 Pixel copy[cheight][cwidth];
+                
                 for (int i = 0; i < height; i++) 
                 {
                     for (int j = 0; j < width; j++) 
@@ -234,15 +235,17 @@ int main(int argc, char **argv) {
                 }
                 int ic = 0;
                 int jc = 0; 
-                for(int i = ccol; i < ccol + cheight; i++)
+                for(int i = crow; i < crow + cheight; i++)
                 {
-                    for(int j = crow; j < crow + cwidth; j++)
+                    for(int j = ccol; j < ccol + cwidth; j++)
                     {
-                        copy[ic][jc] = image[i][j]; 
-                        jc++; 
+                        Pixel hi = image[i][j]; 
+                        copy[ic][jc] = hi; 
+                        jc++;
                     }
                     ic++;
                 }
+                printf("%d", copy[1][1].r);
                 int ip = 0;
                 int jp = 0; 
                 for(int i = prow; i < prow + cheight; i++)
