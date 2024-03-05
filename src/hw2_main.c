@@ -468,7 +468,6 @@ int main(int argc, char **argv) {
                 fscanf(f2, "%d", &num_colors);
                 int image[height][width];
                 Pixel color_table[max_color];
-                int color_index[height][width];
                 for (int i = 0; i < num_colors; i++) 
                 {
                     fscanf(f2, "%hhu %hhu %hhu", &color_table[i].r, &color_table[i].g, &color_table[i].b);
