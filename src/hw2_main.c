@@ -335,6 +335,7 @@ int main(int argc, char **argv) {
                         {
                             count++; 
                             i++; 
+                            j = 0;
                         }
                         if (color_index[i][j] == color_index[i][j-1]) 
                         {
