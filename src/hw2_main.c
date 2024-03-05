@@ -44,6 +44,7 @@ int main(int argc, char **argv) {
     int g = 0; 
     int v = 0; 
     int option;
+    
     while ((option = getopt(argc, argv, ":i:o:c:p:r:")) != -1) {
         switch (option) {
             case 'i':
@@ -183,6 +184,7 @@ int main(int argc, char **argv) {
     {
         return INPUT_FILE_MISSING; 
     }
+        
     if ((fp = fopen(output_file, "w")) == NULL)
     {
         return OUTPUT_FILE_UNWRITABLE; 
@@ -454,43 +456,56 @@ int main(int argc, char **argv) {
             }
             else
             {
-                
-                /*FILE *f1, *f2;
+                FILE *f1, *f2;
                 f1 = fopen(input_file, "r");
                 f2 = fopen(output_file, "w");
                 char format[4];
                 int width, height, num_colors;
-                int max_color = 255;
+                //int max_color = 255;
                 fscanf(f1, "%3s", format); 
                 fscanf(f1, "%d %d", &width, &height); 
                 fscanf(f1, "%d", &num_colors);
                 Pixel color_table[num_colors];
-                int image[height][width];
+                Pixel image[height * width]; 
                 for (int i = 0; i < num_colors; i++) 
                 {
                     fscanf(f1, "%hhu %hhu %hhu", &color_table[i].r, &color_table[i].g, &color_table[i].b);
                 }
-                
-                for (int i = 0; i < height; i++) 
-                {
-                    for (int j = 0; j < width; j++) 
+                char ch;
+                ch = fgetc(f1);
+                ch = fgetc(f1);
+                ch = fgetc(f1);
+                int l = 0; 
+                while (ch != EOF) 
+                { 
+                    if(ch == '*')
                     {
-                        fscanf(f1, "%d", &image[i][j]);
-                        printf("%d\n", image[i][j]);
+                        int repeats; 
+                        fscanf(f1, "%d", &repeats); 
+                        int index;
+                        fscanf(f1, "%d", &index); 
+                        for(int i = 0; i < repeats; i++)
+                        {
+                            image[l] = color_table[index]; 
+                            l++; 
+                        }
                     }
+                    else
+                    {
+                        int index;
+                        fscanf(f1, "%d", &index); 
+                        image[l] = color_table[index]; 
+                        l++; 
+                    }
+                    ch = fgetc(f1);
+                    ch = fgetc(f1);
                 }
-                fprintf(f2, "P3\n%d %d\n%d\n", width, height, max_color);
-                for (int i = 0; i < height; i++) 
+                for(int i = 0; i < height * width; i++)
                 {
-                    for (int j = 0; j < width; j++) 
-                    {
-                        Pixel color = color_table[image[i][j]];
-                        fprintf(f2, "%hhu %hhu %hhu ", color.r, color.g, color.b);
-                    }
-                    fprintf(f2, "\n");
+                    fprintf(f2, "%hhu %hhu %hhu ", image[i].r, image[i].g, image[i].b);
                 }
                 fclose(f1); 
-                fclose(f2); */
+                fclose(f2); 
             }
         }
     }
