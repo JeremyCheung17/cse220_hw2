@@ -203,7 +203,6 @@ int main(int argc, char **argv) {
     {
         return R_ARGUMENT_INVALID; 
     }
-
     int ilength = strlen(input_file);
     char itype = input_file[ilength - 1];
     int olength = strlen(output_file);
@@ -455,7 +454,8 @@ int main(int argc, char **argv) {
             }
             else
             {
-                FILE *f1, *f2;
+                
+                /*FILE *f1, *f2;
                 f1 = fopen(input_file, "r");
                 f2 = fopen(output_file, "w");
                 char format[4];
@@ -470,11 +470,13 @@ int main(int argc, char **argv) {
                 {
                     fscanf(f1, "%hhu %hhu %hhu", &color_table[i].r, &color_table[i].g, &color_table[i].b);
                 }
+                
                 for (int i = 0; i < height; i++) 
                 {
                     for (int j = 0; j < width; j++) 
                     {
                         fscanf(f1, "%d", &image[i][j]);
+                        printf("%d\n", image[i][j]);
                     }
                 }
                 fprintf(f2, "P3\n%d %d\n%d\n", width, height, max_color);
@@ -488,7 +490,7 @@ int main(int argc, char **argv) {
                     fprintf(f2, "\n");
                 }
                 fclose(f1); 
-                fclose(f2); 
+                fclose(f2); */
             }
         }
     }
