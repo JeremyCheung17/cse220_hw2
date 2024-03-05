@@ -333,7 +333,6 @@ int main(int argc, char **argv) {
                     {
                         if(j == (width - 1) && color_index[i+1][0] == color_index[i][j])
                         {
-                            count++; 
                             i++; 
                             j = 1; 
                         }
