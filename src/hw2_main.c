@@ -317,7 +317,7 @@ int main(int argc, char **argv) {
                         }
                     }
                 }
-                fprintf(f2, "SBU\n%d %d\n%d ", width, height, num_colors);
+                fprintf(f2, "SBU\n%d %d\n%d\n", width, height, num_colors);
                 for (int i = 0; i < num_colors; i++) 
                 {
                     fprintf(f2, "%hhu %hhu %hhu ", color_table[i].r, color_table[i].g, color_table[i].b);
