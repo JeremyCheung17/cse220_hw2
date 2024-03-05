@@ -511,6 +511,7 @@ int main(int argc, char **argv) {
                 pixel_count = height * width; 
                 Pixel color_table[num_colors];
                 Pixel image[pixel_count]; 
+                Pixel image2[height][width];
                 fprintf(f2, "P3\n%d %d\n255\n", width, height);
                 for (int i = 0; i < num_colors; i++) 
                 {
@@ -556,9 +557,18 @@ int main(int argc, char **argv) {
                         }
                     }
                 }
+                int l2 = 0; 
+                for(int i = 0; i < height; i++)
+                {
+                    for(int j = 0; i < width; j++)
+                    {
+                        image2[i][j] = image[l2];
+                        l2++; 
+                    }
+                }
                 for(int i = 0; i < (height * width); i++)
                 {
-                    fprintf(f2, "%hhu %hhu %hhu ", image[i].r, image[i].g, image[i].b);
+                    fprintf(f2, "%hhu %hhu %hhu ", image2[i][j].r, image2[i][j].g, image2[i][j].b);
                 }
                 fclose(f1); 
                 fclose(f2); 
