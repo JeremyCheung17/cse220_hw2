@@ -557,18 +557,19 @@ int main(int argc, char **argv) {
                         }
                     }
                 }
-                int l2 = 0; 
+                int index = 0; 
                 for(int i = 0; i < height; i++)
                 {
-                    for(int j = 0; i < width; j++)
+                    for(int j = 0; j < width; j++)
                     {
-                        image2[i][j] = image[l2];
-                        l2++; 
+                        image2[i][j] = image[index];
+                        index++; 
+                        
                     }
                 }
-                for(int i = 0; i < (height * width); i++)
+                for(int i = 0; i < height; i++)
                 {
-                    for(int j = 0; i < width; j++)
+                    for(int j = 0; j < width; j++)
                     {
                         fprintf(f2, "%hhu %hhu %hhu ", image2[i][j].r, image2[i][j].g, image2[i][j].b);
                     }
