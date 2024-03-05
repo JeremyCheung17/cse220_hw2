@@ -217,7 +217,7 @@ int main(int argc, char **argv) {
             {
                 FILE *f1, *f2;
                 f1 = fopen(input_file, "r");
-                f2 = fopen(output_file, "r");
+                f2 = fopen(output_file, "w");
                 char format[3];
                 int width, height, max_color;
                 fscanf(f1, "%2s", format); 
@@ -232,19 +232,6 @@ int main(int argc, char **argv) {
                         fscanf(f1, "%hhu %hhu %hhu", &image[i][j].r, &image[i][j].g, &image[i][j].b);
                     }
                 }
-                char format2[3];
-                int width2, height2, max_color2;
-                fscanf(f2, "%2s", format2); 
-                fscanf(f2, "%d %d", &width2, &height2); 
-                fscanf(f2, "%d", &max_color2);
-                Pixel image2[height2][width2];
-                for (int i = 0; i < height2; i++) 
-                {
-                    for (int j = 0; j < width2; j++) 
-                    {
-                        fscanf(f2, "%hhu %hhu %hhu", &image2[i][j].r, &image2[i][j].g, &image2[i][j].b);
-                    }
-                }
                 int ic = 0;
                 int jc = 0; 
                 for(int i = ccol; i < ccol + cheight; i++)
@@ -256,17 +243,15 @@ int main(int argc, char **argv) {
                     }
                     ic++;
                 }
-                fclose(f2); 
-                f2 = fopen(output_file, "w");
                 int ip = 0;
                 int jp = 0; 
                 for(int i = prow; i < prow + cheight; i++)
                 {
                     for(int j = pcol; j < pcol + cwidth; j++)
                     {
-                        if(i < height2 && j < width2)
+                        if(i < height && j < width)
                         {
-                            image2[i][j] = copy[ip][jp];
+                            image[i][j] = copy[ip][jp];
                             jp++; 
                         }
                     }
@@ -276,12 +261,12 @@ int main(int argc, char **argv) {
                 {
 
                 }
-                fprintf(f2, "P3\n%d %d\n255\n", width2, height2);
-                for(int i = 0; i < height2; i++)
+                fprintf(f2, "P3\n%d %d\n255\n", width, height);
+                for(int i = 0; i < height; i++)
                 {
-                    for(int j = 0; j < width2; j++)
+                    for(int j = 0; j < width; j++)
                     {
-                        fprintf(f2, "%hhu %hhu %hhu ", image2[i][j].r, image2[i][j].g, image2[i][j].b);
+                        fprintf(f2, "%hhu %hhu %hhu ", image[i][j].r, image[i][j].g, image[i][j].b);
                     }
                 }
                 fclose(f1); 
