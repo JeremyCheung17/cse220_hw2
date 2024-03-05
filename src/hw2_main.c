@@ -284,12 +284,12 @@ int main(int argc, char **argv) {
                 f2 = fopen(output_file, "w");
                 char format[2];
                 int width, height, max_color;
-                Pixel image[1000][1000];
-                Pixel color_table[255];
-                int color_index[1000][1000];
                 fscanf(f1, "%2s", format); 
                 fscanf(f1, "%d %d", &width, &height); 
                 fscanf(f1, "%d", &max_color);
+                Pixel image[height][width];
+                Pixel color_table[max_color];
+                int color_index[height][width];
                 for (int i = 0; i < height; i++) 
                 {
                     for (int j = 0; j < width; j++) 
@@ -332,7 +332,24 @@ int main(int argc, char **argv) {
                     for (int j = 1; j < width; j++) 
                     {
                         if(j == (width - 1) && color_index[i+1][0] == color_index[i][j])
-                        {
+                        { 
+                            if (color_index[i][j] == color_index[i][j-1]) 
+                            {
+                                count++;
+                            } 
+                            else 
+                            {
+                                if (count > 1) 
+                                {
+                                    fprintf(f2, "*%d %d ", count, color_index[i][j-1]);
+                                } 
+                                else 
+                                {
+                                    fprintf(f2, "%d ", color_index[i][j-1]);
+                                }
+                                count = 1;
+                            }
+                            count++; 
                             i++; 
                             j = 1; 
                         }
