@@ -478,7 +478,8 @@ int main(int argc, char **argv) {
                 ch = fgetc(f1);
                 ch = fgetc(f1);
                 int l = 0; 
-                while (ch != EOF && l < pixel_count) 
+                
+                while (ch != EOF) 
                 { 
                     if (ch == '*')
                     {
@@ -494,16 +495,24 @@ int main(int argc, char **argv) {
                     }
                     else if (ch != ' ')
                     {
+                        ungetc(ch, f1); 
                         int index;
-                        index = (int) ch - 48;
+                        fscanf(f1, "%d", &index); 
                         image[l] = color_table[index]; 
                         l++; 
                     }
-                    ch = fgetc(f1);
-                    ch = fgetc(f1);
+                    if(ch != EOF)
+                    {
+                        ch = fgetc(f1);
+                    }
+                    while(ch == '\n' || ch == ' ')
+                    {
+                        if(ch != EOF)
+                        {
+                            ch = fgetc(f1);
+                        }
+                    }
                 }
-                int bleh = image[0].r; 
-                bleh++; 
                 for(int i = 0; i < (height * width); i++)
                 {
                     fprintf(f2, "%hhu %hhu %hhu ", image[i].r, image[i].g, image[i].b);
