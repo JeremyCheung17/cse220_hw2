@@ -8,9 +8,12 @@
 #include <string.h>
 #include <unistd.h> 
 #include <getopt.h>
-typedef struct {
+
+typedef struct 
+{
     unsigned char r, g, b;
 } Pixel;
+
 int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
@@ -284,8 +287,8 @@ int main(int argc, char **argv) {
                 Pixel image[1000][1000];
                 Pixel color_table[255];
                 int color_index[1000][1000];
-                fscanf(f1, "%2s", format); // Read magic number
-                fscanf(f1, "%d %d", &width, &height); // Read width and height
+                fscanf(f1, "%2s", format); 
+                fscanf(f1, "%d %d", &width, &height); 
                 fscanf(f1, "%d", &max_color);
                 for (int i = 0; i < height; i++) 
                 {
@@ -328,6 +331,11 @@ int main(int argc, char **argv) {
                     int count = 1;
                     for (int j = 1; j < width; j++) 
                     {
+                        if(j == width - 1 && color_index[i+1][0] == color_index[i][j])
+                        {
+                            count++; 
+                            i++; 
+                        }
                         if (color_index[i][j] == color_index[i][j-1]) 
                         {
                             count++;
