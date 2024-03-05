@@ -282,7 +282,7 @@ int main(int argc, char **argv) {
                 FILE *f1, *f2;
                 f1 = fopen(input_file, "r");
                 f2 = fopen(output_file, "w");
-                char format[2];
+                char format[3];
                 int width, height, max_color;
                 fscanf(f1, "%2s", format); 
                 fscanf(f1, "%d %d", &width, &height); 
@@ -427,7 +427,7 @@ int main(int argc, char **argv) {
                 fclose(f2); 
             }
         }
-        else if(otype == 'p')
+        else if(otype == 'm')
         {
             if(prow != -1)
             {
@@ -456,10 +456,39 @@ int main(int argc, char **argv) {
             else
             {
                 FILE *f1, *f2;
-                //char ch;
                 f1 = fopen(input_file, "r");
                 f2 = fopen(output_file, "w");
-
+                char format[3];
+                int width, height, num_colors; 
+                int max_color = 255;
+                fscanf(f1, "%3s", format); 
+                printf("%s", format);
+                fscanf(f1, "%d %d", &width, &height); 
+                fprintf(f2, "P3\n%d %d\n%d\n", width, height, max_color);
+                fscanf(f2, "%d", &num_colors);
+                int image[height][width];
+                Pixel color_table[max_color];
+                int color_index[height][width];
+                for (int i = 0; i < num_colors; i++) 
+                {
+                    fscanf(f2, "%hhu %hhu %hhu", &color_table[i].r, &color_table[i].g, &color_table[i].b);
+                }
+                for (int i = 0; i < height; i++) 
+                {
+                    for (int j = 0; j < width; j++) 
+                    {
+                        fscanf(f2, "%d", &image[i][j]);
+                    }
+                }
+                for (int i = 0; i < height; i++) 
+                {
+                    for (int j = 0; j < width; j++) 
+                    {
+                        Pixel color = color_table[image[i][j]];
+                        fprintf(f2, "%hhu %hhu %hhu ", color.r, color.g, color.b);
+                    }
+                    fprintf(f2, "\n");
+                }
                 fclose(f1); 
                 fclose(f2); 
             }
