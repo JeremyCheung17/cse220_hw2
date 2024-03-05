@@ -461,24 +461,29 @@ int main(int argc, char **argv) {
                 f2 = fopen(output_file, "w");
                 char format[4];
                 int width, height, num_colors;
-                //int max_color = 255;
+                int pixel_count; 
                 fscanf(f1, "%3s", format); 
                 fscanf(f1, "%d %d", &width, &height); 
                 fscanf(f1, "%d", &num_colors);
+                pixel_count = height * width; 
                 Pixel color_table[num_colors];
-                Pixel image[height * width]; 
+                Pixel image[pixel_count]; 
+                fprintf(f2, "P3\n%d %d\n255\n", width, height);
                 for (int i = 0; i < num_colors; i++) 
                 {
                     fscanf(f1, "%hhu %hhu %hhu", &color_table[i].r, &color_table[i].g, &color_table[i].b);
                 }
                 char ch;
                 ch = fgetc(f1);
+                printf("%c\n", ch);
                 ch = fgetc(f1);
+                printf("%c\n", ch);
                 ch = fgetc(f1);
+                printf("%c\n", ch);
                 int l = 0; 
-                while (ch != EOF) 
+                while (ch != EOF && l < pixel_count) 
                 { 
-                    if(ch == '*')
+                    if (ch == '*')
                     {
                         int repeats; 
                         fscanf(f1, "%d", &repeats); 
@@ -487,20 +492,26 @@ int main(int argc, char **argv) {
                         for(int i = 0; i < repeats; i++)
                         {
                             image[l] = color_table[index]; 
+                            printf("RED : %hhu GREEN: %hhu BLUE: %hhu \n", image[l].r, image[l].g, image[l].b);
                             l++; 
                         }
                     }
-                    else
+                    else if (ch != ' ')
                     {
                         int index;
-                        fscanf(f1, "%d", &index); 
+                        index = (int) ch - 48;
                         image[l] = color_table[index]; 
+                        printf("RED : %hhu GREEN: %hhu BLUE: %hhu \n", image[l].r, image[l].g, image[l].b);
                         l++; 
                     }
                     ch = fgetc(f1);
+                    printf("%c\n", ch);
                     ch = fgetc(f1);
+                    printf("%c\n", ch);
                 }
-                for(int i = 0; i < height * width; i++)
+                int bleh = image[0].r; 
+                bleh++; 
+                for(int i = 0; i < (height * width); i++)
                 {
                     fprintf(f2, "%hhu %hhu %hhu ", image[i].r, image[i].g, image[i].b);
                 }
