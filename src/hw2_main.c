@@ -568,7 +568,10 @@ int main(int argc, char **argv) {
                 }
                 for(int i = 0; i < (height * width); i++)
                 {
-                    fprintf(f2, "%hhu %hhu %hhu ", image2[i][j].r, image2[i][j].g, image2[i][j].b);
+                    for(int j = 0; i < width; j++)
+                    {
+                        fprintf(f2, "%hhu %hhu %hhu ", image2[i][j].r, image2[i][j].g, image2[i][j].b);
+                    }
                 }
                 fclose(f1); 
                 fclose(f2); 
