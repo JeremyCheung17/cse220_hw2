@@ -492,7 +492,6 @@ int main(int argc, char **argv) {
                         for(int i = 0; i < repeats; i++)
                         {
                             image[l] = color_table[index]; 
-                            printf("RED : %hhu GREEN: %hhu BLUE: %hhu \n", image[l].r, image[l].g, image[l].b);
                             l++; 
                         }
                     }
@@ -501,7 +500,6 @@ int main(int argc, char **argv) {
                         int index;
                         index = (int) ch - 48;
                         image[l] = color_table[index]; 
-                        printf("RED : %hhu GREEN: %hhu BLUE: %hhu \n", image[l].r, image[l].g, image[l].b);
                         l++; 
                     }
                     ch = fgetc(f1);
