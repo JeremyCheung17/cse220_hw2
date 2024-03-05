@@ -331,11 +331,11 @@ int main(int argc, char **argv) {
                     int count = 1;
                     for (int j = 1; j < width; j++) 
                     {
-                        if(j == width - 1 && color_index[i+1][0] == color_index[i][j])
+                        if(j == (width - 1) && color_index[i+1][0] == color_index[i][j])
                         {
                             count++; 
                             i++; 
-                            j = 0;
+                            j = 1; 
                         }
                         if (color_index[i][j] == color_index[i][j-1]) 
                         {
