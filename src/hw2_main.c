@@ -475,11 +475,8 @@ int main(int argc, char **argv) {
                 }
                 char ch;
                 ch = fgetc(f1);
-                printf("%c\n", ch);
                 ch = fgetc(f1);
-                printf("%c\n", ch);
                 ch = fgetc(f1);
-                printf("%c\n", ch);
                 int l = 0; 
                 while (ch != EOF && l < pixel_count) 
                 { 
@@ -503,9 +500,7 @@ int main(int argc, char **argv) {
                         l++; 
                     }
                     ch = fgetc(f1);
-                    printf("%c\n", ch);
                     ch = fgetc(f1);
-                    printf("%c\n", ch);
                 }
                 int bleh = image[0].r; 
                 bleh++; 
