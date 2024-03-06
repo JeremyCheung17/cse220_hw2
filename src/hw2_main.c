@@ -606,7 +606,6 @@ int main(int argc, char **argv) {
                 ch = fgetc(f1);
                 ch = fgetc(f1);
                 int l = 0; 
-                
                 while (ch != EOF) 
                 { 
                     if (ch == '*')
@@ -806,14 +805,6 @@ int main(int argc, char **argv) {
                 Pixel image[pixel_count]; 
                 Pixel image2[height][width];
                 Pixel copy[cheight][cwidth];
-                if((crow + cheight) > height)
-                {
-                    cheight = height - crow; 
-                }
-                if((ccol + cwidth) > width)
-                {
-                    cwidth = width - ccol; 
-                }
                 fprintf(f2, "P3\n%d %d\n255\n", width, height);
                 for (int i = 0; i < num_colors; i++) 
                 {
@@ -869,11 +860,22 @@ int main(int argc, char **argv) {
                         
                     }
                 }
+                if((crow + cheight) > height)
+                {
+                    cheight = height - crow; 
+                }
+                if((ccol + cwidth) > width)
+                {
+                    cwidth = width - ccol; 
+                }
                 for(int i = crow; i < (crow + cheight); i++)
                 {
                     for(int j = ccol; j < (ccol + cwidth); j++)
                     {
-                        copy[i - crow][j - ccol] = image2[i][j]; 
+                        if(i < height && j < width)
+                        {
+                            copy[i - crow][j - ccol] = image2[i][j]; 
+                        }
                     }
                 }
                 int ip = 0;
@@ -885,8 +887,8 @@ int main(int argc, char **argv) {
                         if(i < height && j < width)
                         {
                             image2[i][j] = copy[ip][jp];
-                            jp++; 
                         }
+                        jp++; 
                     }
                     jp = 0; 
                     ip++; 
@@ -895,7 +897,6 @@ int main(int argc, char **argv) {
                 {
 
                 }
-                fprintf(f2, "P3\n%d %d\n255\n", width, height);
                 for(int i = 0; i < height; i++)
                 {
                     for(int j = 0; j < width; j++)
