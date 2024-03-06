@@ -304,9 +304,130 @@ int main(int argc, char **argv) {
                 //char ch;
                 f1 = fopen(input_file, "r");
                 f2 = fopen(output_file, "w");
+                char format[3];
+                int width, height, max_color;
+                fscanf(f1, "%2s", format); 
+                fscanf(f1, "%d %d", &width, &height); 
+                fscanf(f1, "%d", &max_color);
+                Pixel image[height][width];
+                Pixel copy[cheight][cwidth];
+                Pixel color_table[max_color];
+                int color_index[height][width];
+                printf("%d", copy[0][1].r);
+                for (int i = 0; i < height; i++) 
+                {
+                    for (int j = 0; j < width; j++) 
+                    {
+                        fscanf(f1, "%hhu %hhu %hhu", &image[i][j].r, &image[i][j].g, &image[i][j].b);
+                    }
+                }
+                for(int i = crow; i < (crow + cheight); i++)
+                {
+                    for(int j = ccol; j < (ccol + cwidth); j++)
+                    {
+                        copy[i - crow][j - ccol] = image[i][j]; 
+                    }
+                }
+                int ip = 0;
+                int jp = 0; 
+                for(int i = prow; i < prow + cheight; i++)
+                {
+                    for(int j = pcol; j < pcol + cwidth; j++)
+                    {
+                        if(i < height && j < width)
+                        {
+                            image[i][j] = copy[ip][jp];
+                            jp++; 
+                        }
+                    }
+                    jp = 0; 
+                    ip++; 
+                }
                 if(rrow != -1)
                 {
 
+                }
+                int num_colors = 0;
+                for (int i = 0; i < height; i++) 
+                {
+                     for (int j = 0; j < width; j++) 
+                     {
+                        int found = 0;
+                        for (int k = 0; k < num_colors; k++) 
+                        {
+                            if (image[i][j].r == color_table[k].r && image[i][j].g == color_table[k].g && image[i][j].b == color_table[k].b) 
+                            {
+                                color_index[i][j] = k;
+                                found = 1;
+                                break;
+                            }
+                        }
+                        if (!found) 
+                        {
+                            color_table[num_colors] = image[i][j];
+                            color_index[i][j] = num_colors;
+                            num_colors++;
+                        }
+                    }
+                }
+                fprintf(f2, "SBU\n%d %d\n%d\n", width, height, num_colors);
+                for (int i = 0; i < num_colors; i++) 
+                {
+                    fprintf(f2, "%hhu %hhu %hhu ", color_table[i].r, color_table[i].g, color_table[i].b);
+                }
+                fprintf(f2, "\n");
+                for (int i = 0; i < height; i++) 
+                {
+                    int count = 1;
+                    for (int j = 1; j < width; j++) 
+                    {
+                        if(j == (width - 1) && color_index[i+1][0] == color_index[i][j])
+                        { 
+                            if (color_index[i][j] == color_index[i][j-1]) 
+                            {
+                                count++;
+                            } 
+                            else 
+                            {
+                                if (count > 1) 
+                                {
+                                    fprintf(f2, "*%d %d ", count, color_index[i][j-1]);
+                                } 
+                                else 
+                                {
+                                    fprintf(f2, "%d ", color_index[i][j-1]);
+                                }
+                                count = 1;
+                            }
+                            count++; 
+                            i++; 
+                            j = 1; 
+                        }
+                        if (color_index[i][j] == color_index[i][j-1]) 
+                        {
+                            count++;
+                        } 
+                        else 
+                        {
+                            if (count > 1) 
+                            {
+                                fprintf(f2, "*%d %d ", count, color_index[i][j-1]);
+                            } 
+                            else 
+                            {
+                                fprintf(f2, "%d ", color_index[i][j-1]);
+                            }
+                            count = 1;
+                        }
+                    }
+                    if (count > 1) 
+                    {
+                        fprintf(f2, "*%d %d ", count, color_index[i][width-1]);
+                    } 
+                    else 
+                    {
+                        fprintf(f2, "%d ", color_index[i][width-1]);
+                    }
                 }
                 fclose(f1); 
                 fclose(f2); 
