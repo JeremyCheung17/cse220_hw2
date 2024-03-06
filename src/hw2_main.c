@@ -215,6 +215,7 @@ int main(int argc, char **argv) {
         {
             if(prow != -1)
             {
+                
                 FILE *f1, *f2;
                 f1 = fopen(input_file, "r");
                 f2 = fopen(output_file, "w");
@@ -225,7 +226,6 @@ int main(int argc, char **argv) {
                 fscanf(f1, "%d", &max_color);
                 Pixel image[height][width];
                 Pixel copy[cheight][cwidth];
-                printf("%d", copy[0][1].r);
                 for (int i = 0; i < height; i++) 
                 {
                     for (int j = 0; j < width; j++) 
@@ -233,11 +233,22 @@ int main(int argc, char **argv) {
                         fscanf(f1, "%hhu %hhu %hhu", &image[i][j].r, &image[i][j].g, &image[i][j].b);
                     }
                 }
+                if((crow + cheight) > height)
+                {
+                    cheight = height - crow; 
+                }
+                if((ccol + cwidth) > width)
+                {
+                    cwidth = width - ccol; 
+                }
                 for(int i = crow; i < (crow + cheight); i++)
                 {
                     for(int j = ccol; j < (ccol + cwidth); j++)
                     {
-                        copy[i - crow][j - ccol] = image[i][j]; 
+                        if(i < height && j < width)
+                        {
+                            copy[i - crow][j - ccol] = image[i][j]; 
+                        }
                     }
                 }
                 int ip = 0;
@@ -249,8 +260,8 @@ int main(int argc, char **argv) {
                         if(i < height && j < width)
                         {
                             image[i][j] = copy[ip][jp];
-                            jp++; 
                         }
+                        jp++; 
                     }
                     jp = 0; 
                     ip++; 
@@ -313,7 +324,14 @@ int main(int argc, char **argv) {
                 Pixel copy[cheight][cwidth];
                 Pixel color_table[max_color];
                 int color_index[height][width];
-                printf("%d", copy[0][1].r);
+                if((crow + cheight) > height)
+                {
+                    cheight = height - crow; 
+                }
+                if((ccol + cwidth) > width)
+                {
+                    cwidth = width - ccol; 
+                }
                 for (int i = 0; i < height; i++) 
                 {
                     for (int j = 0; j < width; j++) 
@@ -571,6 +589,14 @@ int main(int argc, char **argv) {
                 Pixel copy[cheight][cwidth];
                 int color_index[height][width];
                 fprintf(f2, "P3\n%d %d\n255\n", width, height);
+                if((crow + cheight) > height)
+                {
+                    cheight = height - crow; 
+                }
+                if((ccol + cwidth) > width)
+                {
+                    cwidth = width - ccol; 
+                }
                 for (int i = 0; i < num_colors; i++) 
                 {
                     fscanf(f1, "%hhu %hhu %hhu", &color_table[i].r, &color_table[i].g, &color_table[i].b);
@@ -780,7 +806,14 @@ int main(int argc, char **argv) {
                 Pixel image[pixel_count]; 
                 Pixel image2[height][width];
                 Pixel copy[cheight][cwidth];
-
+                if((crow + cheight) > height)
+                {
+                    cheight = height - crow; 
+                }
+                if((ccol + cwidth) > width)
+                {
+                    cwidth = width - ccol; 
+                }
                 fprintf(f2, "P3\n%d %d\n255\n", width, height);
                 for (int i = 0; i < num_colors; i++) 
                 {
