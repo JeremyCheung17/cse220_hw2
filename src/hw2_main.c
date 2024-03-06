@@ -556,12 +556,183 @@ int main(int argc, char **argv) {
             if(prow != -1)
             {
                 FILE *f1, *f2;
-                //char ch;
                 f1 = fopen(input_file, "r");
                 f2 = fopen(output_file, "w");
+                char format[4];
+                int width, height, num_colors;
+                int pixel_count; 
+                fscanf(f1, "%3s", format); 
+                fscanf(f1, "%d %d", &width, &height); 
+                fscanf(f1, "%d", &num_colors);
+                pixel_count = height * width; 
+                Pixel color_table[num_colors];
+                Pixel image[pixel_count]; 
+                Pixel image2[height][width];
+                Pixel copy[cheight][cwidth];
+                int color_index[height][width];
+                fprintf(f2, "P3\n%d %d\n255\n", width, height);
+                for (int i = 0; i < num_colors; i++) 
+                {
+                    fscanf(f1, "%hhu %hhu %hhu", &color_table[i].r, &color_table[i].g, &color_table[i].b);
+                }
+                char ch;
+                ch = fgetc(f1);
+                ch = fgetc(f1);
+                ch = fgetc(f1);
+                int l = 0; 
+                
+                while (ch != EOF) 
+                { 
+                    if (ch == '*')
+                    {
+                        int repeats; 
+                        fscanf(f1, "%d", &repeats); 
+                        int index;
+                        fscanf(f1, "%d", &index); 
+                        for(int i = 0; i < repeats; i++)
+                        {
+                            image[l] = color_table[index]; 
+                            l++; 
+                        }
+                    }
+                    else if (ch != ' ')
+                    {
+                        ungetc(ch, f1); 
+                        int index;
+                        fscanf(f1, "%d", &index); 
+                        image[l] = color_table[index]; 
+                        l++; 
+                    }
+                    if(ch != EOF)
+                    {
+                        ch = fgetc(f1);
+                    }
+                    while(ch == '\n' || ch == ' ')
+                    {
+                        if(ch != EOF)
+                        {
+                            ch = fgetc(f1);
+                        }
+                    }
+                }
+                int index = 0; 
+                for(int i = 0; i < height; i++)
+                {
+                    for(int j = 0; j < width; j++)
+                    {
+                        image2[i][j] = image[index];
+                        index++; 
+                        
+                    }
+                }
+                for(int i = crow; i < (crow + cheight); i++)
+                {
+                    for(int j = ccol; j < (ccol + cwidth); j++)
+                    {
+                        copy[i - crow][j - ccol] = image2[i][j]; 
+                    }
+                }
+                int ip = 0;
+                int jp = 0; 
+                for(int i = prow; i < prow + cheight; i++)
+                {
+                    for(int j = pcol; j < pcol + cwidth; j++)
+                    {
+                        if(i < height && j < width)
+                        {
+                            image2[i][j] = copy[ip][jp];
+                            jp++; 
+                        }
+                    }
+                    jp = 0; 
+                    ip++; 
+                }
+
                 if(rrow != -1)
                 {
 
+                }
+                int num_colors = 0;
+                for (int i = 0; i < height; i++) 
+                {
+                     for (int j = 0; j < width; j++) 
+                     {
+                        int found = 0;
+                        for (int k = 0; k < num_colors; k++) 
+                        {
+                            if (image2[i][j].r == color_table[k].r && image2[i][j].g == color_table[k].g && image2[i][j].b == color_table[k].b) 
+                            {
+                                color_index[i][j] = k;
+                                found = 1;
+                                break;
+                            }
+                        }
+                        if (!found) 
+                        {
+                            color_table[num_colors] = image2[i][j];
+                            color_index[i][j] = num_colors;
+                            num_colors++;
+                        }
+                    }
+                }
+                fprintf(f2, "SBU\n%d %d\n%d\n", width, height, num_colors);
+                for (int i = 0; i < num_colors; i++) 
+                {
+                    fprintf(f2, "%hhu %hhu %hhu ", color_table[i].r, color_table[i].g, color_table[i].b);
+                }
+                fprintf(f2, "\n");
+                for (int i = 0; i < height; i++) 
+                {
+                    int count = 1;
+                    for (int j = 1; j < width; j++) 
+                    {
+                        if(j == (width - 1) && color_index[i+1][0] == color_index[i][j])
+                        { 
+                            if (color_index[i][j] == color_index[i][j-1]) 
+                            {
+                                count++;
+                            } 
+                            else 
+                            {
+                                if (count > 1) 
+                                {
+                                    fprintf(f2, "*%d %d ", count, color_index[i][j-1]);
+                                } 
+                                else 
+                                {
+                                    fprintf(f2, "%d ", color_index[i][j-1]);
+                                }
+                                count = 1;
+                            }
+                            count++; 
+                            i++; 
+                            j = 1; 
+                        }
+                        if (color_index[i][j] == color_index[i][j-1]) 
+                        {
+                            count++;
+                        } 
+                        else 
+                        {
+                            if (count > 1) 
+                            {
+                                fprintf(f2, "*%d %d ", count, color_index[i][j-1]);
+                            } 
+                            else 
+                            {
+                                fprintf(f2, "%d ", color_index[i][j-1]);
+                            }
+                            count = 1;
+                        }
+                    }
+                    if (count > 1) 
+                    {
+                        fprintf(f2, "*%d %d ", count, color_index[i][width-1]);
+                    } 
+                    else 
+                    {
+                        fprintf(f2, "%d ", color_index[i][width-1]);
+                    }
                 }
                 fclose(f1); 
                 fclose(f2); 
@@ -597,13 +768,108 @@ int main(int argc, char **argv) {
             if(prow != -1)
             {
                 FILE *f1, *f2;
-                //char ch;
                 f1 = fopen(input_file, "r");
                 f2 = fopen(output_file, "w");
+                char format[4];
+                int width, height, num_colors;
+                int pixel_count; 
+                fscanf(f1, "%3s", format); 
+                fscanf(f1, "%d %d", &width, &height); 
+                fscanf(f1, "%d", &num_colors);
+                pixel_count = height * width; 
+                Pixel color_table[num_colors];
+                Pixel image[pixel_count]; 
+                Pixel image2[height][width];
+                Pixel copy[cheight][cwidth];
 
+                fprintf(f2, "P3\n%d %d\n255\n", width, height);
+                for (int i = 0; i < num_colors; i++) 
+                {
+                    fscanf(f1, "%hhu %hhu %hhu", &color_table[i].r, &color_table[i].g, &color_table[i].b);
+                }
+                char ch;
+                ch = fgetc(f1);
+                ch = fgetc(f1);
+                ch = fgetc(f1);
+                int l = 0; 
+                
+                while (ch != EOF) 
+                { 
+                    if (ch == '*')
+                    {
+                        int repeats; 
+                        fscanf(f1, "%d", &repeats); 
+                        int index;
+                        fscanf(f1, "%d", &index); 
+                        for(int i = 0; i < repeats; i++)
+                        {
+                            image[l] = color_table[index]; 
+                            l++; 
+                        }
+                    }
+                    else if (ch != ' ')
+                    {
+                        ungetc(ch, f1); 
+                        int index;
+                        fscanf(f1, "%d", &index); 
+                        image[l] = color_table[index]; 
+                        l++; 
+                    }
+                    if(ch != EOF)
+                    {
+                        ch = fgetc(f1);
+                    }
+                    while(ch == '\n' || ch == ' ')
+                    {
+                        if(ch != EOF)
+                        {
+                            ch = fgetc(f1);
+                        }
+                    }
+                }
+                int index = 0; 
+                for(int i = 0; i < height; i++)
+                {
+                    for(int j = 0; j < width; j++)
+                    {
+                        image2[i][j] = image[index];
+                        index++; 
+                        
+                    }
+                }
+                for(int i = crow; i < (crow + cheight); i++)
+                {
+                    for(int j = ccol; j < (ccol + cwidth); j++)
+                    {
+                        copy[i - crow][j - ccol] = image2[i][j]; 
+                    }
+                }
+                int ip = 0;
+                int jp = 0; 
+                for(int i = prow; i < prow + cheight; i++)
+                {
+                    for(int j = pcol; j < pcol + cwidth; j++)
+                    {
+                        if(i < height && j < width)
+                        {
+                            image2[i][j] = copy[ip][jp];
+                            jp++; 
+                        }
+                    }
+                    jp = 0; 
+                    ip++; 
+                }
                 if(rrow != -1)
                 {
 
+                }
+                fprintf(f2, "P3\n%d %d\n255\n", width, height);
+                for(int i = 0; i < height; i++)
+                {
+                    for(int j = 0; j < width; j++)
+                    {
+                        fprintf(f2, "%hhu %hhu %hhu ", image2[i][j].r, image2[i][j].g, image2[i][j].b);
+                    }
                 }
                 fclose(f1); 
                 fclose(f2); 
