@@ -176,15 +176,16 @@ int main(int argc, char **argv) {
     {
         return UNRECOGNIZED_ARGUMENT;
     }
+    
     if(in >= 2 || o >= 2 || c >= 2 || p >= 2 || r >= 2)
     {
         return DUPLICATE_ARGUMENT; 
     }
+    
     if ((fp = fopen(input_file, "r")) == NULL)
     {
         return INPUT_FILE_MISSING; 
     }
-        
     if ((fp = fopen(output_file, "w")) == NULL)
     {
         return OUTPUT_FILE_UNWRITABLE; 
@@ -569,6 +570,7 @@ int main(int argc, char **argv) {
     }
     else if(itype == 'u')
     {
+        
         if(otype == 'u')
         {
             if(prow != -1)
@@ -588,7 +590,6 @@ int main(int argc, char **argv) {
                 Pixel image2[height][width];
                 Pixel copy[cheight][cwidth];
                 int color_index[height][width];
-                fprintf(f2, "P3\n%d %d\n255\n", width, height);
                 for (int i = 0; i < num_colors; i++) 
                 {
                     fscanf(f1, "%hhu %hhu %hhu", &color_table[i].r, &color_table[i].g, &color_table[i].b);
@@ -680,6 +681,7 @@ int main(int argc, char **argv) {
                 {
 
                 }
+                num_colors = 0;
                 for (int i = 0; i < height; i++) 
                 {
                      for (int j = 0; j < width; j++) 
@@ -763,6 +765,7 @@ int main(int argc, char **argv) {
                 }
                 fclose(f1); 
                 fclose(f2); 
+                
             }
             else if(rrow != -1)
             {
