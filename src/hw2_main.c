@@ -589,14 +589,6 @@ int main(int argc, char **argv) {
                 Pixel copy[cheight][cwidth];
                 int color_index[height][width];
                 fprintf(f2, "P3\n%d %d\n255\n", width, height);
-                if((crow + cheight) > height)
-                {
-                    cheight = height - crow; 
-                }
-                if((ccol + cwidth) > width)
-                {
-                    cwidth = width - ccol; 
-                }
                 for (int i = 0; i < num_colors; i++) 
                 {
                     fscanf(f1, "%hhu %hhu %hhu", &color_table[i].r, &color_table[i].g, &color_table[i].b);
@@ -606,6 +598,7 @@ int main(int argc, char **argv) {
                 ch = fgetc(f1);
                 ch = fgetc(f1);
                 int l = 0; 
+                
                 while (ch != EOF) 
                 { 
                     if (ch == '*')
@@ -650,11 +643,22 @@ int main(int argc, char **argv) {
                         
                     }
                 }
+                if((crow + cheight) > height)
+                {
+                    cheight = height - crow; 
+                }
+                if((ccol + cwidth) > width)
+                {
+                    cwidth = width - ccol; 
+                }
                 for(int i = crow; i < (crow + cheight); i++)
                 {
                     for(int j = ccol; j < (ccol + cwidth); j++)
                     {
-                        copy[i - crow][j - ccol] = image2[i][j]; 
+                        if(i < height && j < width)
+                        {
+                            copy[i - crow][j - ccol] = image2[i][j]; 
+                        }
                     }
                 }
                 int ip = 0;
@@ -666,13 +670,12 @@ int main(int argc, char **argv) {
                         if(i < height && j < width)
                         {
                             image2[i][j] = copy[ip][jp];
-                            jp++; 
                         }
+                        jp++; 
                     }
                     jp = 0; 
                     ip++; 
                 }
-
                 if(rrow != -1)
                 {
 
